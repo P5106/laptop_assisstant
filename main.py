@@ -1,17 +1,29 @@
-from commands import (
+from parser import parse_command
+from voice import speak, take_voice_command
+
+from commands.open_commands import (
     open_website,
     open_app,
     open_file,
     smart_open,
     search_google,
     search_youtube,
-    tell_time,
-    tell_date,
-    take_screenshot,
-    close_app,
 )
-from parser import parse_command
-from voice import speak, take_voice_command
+from commands.media_commands import play_on_youtube, play_on_spotify
+from commands.utility_commands import tell_time, tell_date, take_screenshot
+from commands.system_commands import (
+    close_app,
+    volume_up,
+    volume_down,
+    mute_volume,
+    lock_laptop,
+    shutdown_laptop,
+    restart_laptop,
+    sleep_laptop,
+    open_task_manager,
+    open_settings,
+)
+from commands.ai_commands import ask_ai
 
 
 def process_command(command):
@@ -35,8 +47,16 @@ def process_command(command):
     elif action == "youtube_search":
         search_youtube(value)
 
+    elif action == "spotify_search":
+        play_on_spotify(value)
+
+    elif action == "play_youtube":
+        play_on_youtube(value)
+
+    elif action == "play_spotify":
+        play_on_spotify(value)
+
     elif action == "tell_time":
-        print("DEBUG: tell_time block reached")
         tell_time()
 
     elif action == "tell_date":
@@ -48,18 +68,48 @@ def process_command(command):
     elif action == "close_app":
         close_app(value)
 
+    elif action == "volume_up":
+        volume_up()
+
+    elif action == "volume_down":
+        volume_down()
+
+    elif action == "mute_volume":
+        mute_volume()
+
+    elif action == "lock_laptop":
+        lock_laptop()
+
+    elif action == "shutdown_laptop":
+        shutdown_laptop()
+
+    elif action == "restart_laptop":
+        restart_laptop()
+
+    elif action == "sleep_laptop":
+        sleep_laptop()
+
+    elif action == "open_task_manager":
+        open_task_manager()
+
+    elif action == "open_settings":
+        open_settings()
+
+    elif action == "ask_ai":
+        ask_ai(value)
+
     elif action == "exit":
         speak("Goodbye")
         return False
 
     else:
-        speak("Invalid command. Try open, search, close, time, date, or screenshot.")
+        speak("Invalid command. Try open, search, play, AI, time, date, screenshot, or system control.")
 
     return True
 
 
 def main():
-    speak("Laptop assistant version 5.1 started")
+    speak("Laptop assistant started")
 
     while True:
         print("\nChoose input mode:")

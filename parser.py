@@ -1,5 +1,5 @@
 def parse_command(command):
-    command = command.lower().strip()
+    command = " ".join(command.lower().strip().split())
 
     # -------------------------
     # EXIT
@@ -47,6 +47,42 @@ def parse_command(command):
     if command.startswith("take screenshot in "):
         location = command[len("take screenshot in "):].strip()
         return ("screenshot", location)
+
+    # -------------------------
+    # AI COMMAND
+    # -------------------------
+    if command.startswith("ask ai "):
+        return ("ask_ai", command[len("ask ai "):].strip())
+
+    # -------------------------
+    # SYSTEM COMMANDS
+    # -------------------------
+    if command in ["increase volume", "volume up", "raise volume"]:
+        return ("volume_up", "")
+
+    if command in ["decrease volume", "volume down", "lower volume"]:
+        return ("volume_down", "")
+
+    if command in ["mute", "mute volume", "silent"]:
+        return ("mute_volume", "")
+
+    if command in ["lock laptop", "lock computer", "lock screen"]:
+        return ("lock_laptop", "")
+
+    if command in ["shutdown laptop", "shutdown computer", "shutdown system"]:
+        return ("shutdown_laptop", "")
+
+    if command in ["restart laptop", "restart computer", "restart system"]:
+        return ("restart_laptop", "")
+
+    if command in ["sleep laptop", "sleep computer", "sleep system"]:
+        return ("sleep_laptop", "")
+
+    if command in ["open task manager", "task manager"]:
+        return ("open_task_manager", "")
+
+    if command in ["open settings", "settings"]:
+        return ("open_settings", "")
 
     # -------------------------
     # CLOSE APP
@@ -97,14 +133,14 @@ def parse_command(command):
 
     if command.startswith("play ") and command.endswith(" on youtube"):
         query = command[len("play "):-len(" on youtube")].strip()
-        return ("youtube_search", query)
+        return ("play_youtube", query)
 
     # -------------------------
-    # SPOTIFY PLAY
+    # SPOTIFY
     # -------------------------
     if command.startswith("play ") and command.endswith(" on spotify"):
         query = command[len("play "):-len(" on spotify")].strip()
-        return ("spotify_search", query)
+        return ("play_spotify", query)
 
     if command.startswith("open ") and command.endswith(" in spotify"):
         query = command[len("open "):-len(" in spotify")].strip()
